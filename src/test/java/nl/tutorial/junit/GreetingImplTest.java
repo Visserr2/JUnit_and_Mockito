@@ -24,11 +24,13 @@ public class GreetingImplTest {
 		assertEquals("Hello Ronald", result);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void greetShouldThrowAnException_For_NameIsNull() {
 		String result = greeting.greet(null);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void greetShouldThrowAnException_For_NameIsBlank() {
 		String result = greeting.greet("");
