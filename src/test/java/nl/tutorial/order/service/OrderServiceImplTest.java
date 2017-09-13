@@ -18,6 +18,7 @@ import nl.tutorial.order.exception.BOException;
 
 public class OrderServiceImplTest {
 	
+	private static final int ORDER_ID = 123;
 	@Mock
 	private OrderDAO dao;
 	private OrderServiceImpl service;
@@ -70,14 +71,14 @@ public class OrderServiceImplTest {
 	@Test
 	public void cancelOrder_Should_Cancel_The_Order() throws SQLException, BOException {
 		// setting expectations
-		when(dao.read(123)).thenReturn(order);
+		when(dao.read(ORDER_ID)).thenReturn(order);
 		when(dao.update(order)).thenReturn(1);		
 		
 		// execute methods
-		boolean result = service.candelOrder(123);
+		boolean result = service.candelOrder(ORDER_ID);
 		
 		// verify if methods are called
-		verify(dao).read(123);
+		verify(dao).read(ORDER_ID);
 		verify(dao).update(order);
 		
 		// assert result
@@ -87,14 +88,14 @@ public class OrderServiceImplTest {
 	@Test
 	public void cancelOrder_Should_Not_Cancel_The_Order() throws SQLException, BOException {
 		// setting expectations
-		when(dao.read(123)).thenReturn(order);
+		when(dao.read(ORDER_ID)).thenReturn(order);
 		when(dao.update(order)).thenReturn(0);		
 		
 		// execute methods
-		boolean result = service.candelOrder(123);
+		boolean result = service.candelOrder(ORDER_ID);
 		
 		// verify if methods are called
-		verify(dao).read(123);
+		verify(dao).read(ORDER_ID);
 		verify(dao).update(order);
 		
 		// assert result
@@ -104,22 +105,48 @@ public class OrderServiceImplTest {
 	@Test(expected=BOException.class)
 	public void cancelOrder_ReadMethod_Should_Throw_BOException() throws SQLException, BOException {
 		// setting expectations
-		when(dao.read(123)).thenThrow(SQLException.class);
+		when(dao.read(ORDER_ID)).thenThrow(SQLException.class);
 		
 		// execute methods
-		service.candelOrder(123);	
+		service.candelOrder(ORDER_ID);	
 	}
 	
 	@Test(expected=BOException.class)
 	public void cancelOrder_UpdateMethod_Should_Throw_BOException() throws SQLException, BOException {
 		// setting expectations
-		when(dao.read(123)).thenReturn(order);
+		when(dao.read(ORDER_ID)).thenReturn(order);
 		when(dao.update(order)).thenThrow(SQLException.class);
 		
 		// execute methods
-		service.candelOrder(123);	
+		service.candelOrder(ORDER_ID);	
 	}
 	
+	@Test
+	public void deleteOrder_Deletes_The_Order() throws SQLException, BOException {
+		when(dao.delete(ORDER_ID)).thenReturn(1);
+		boolean result = service.deleteOrder(ORDER_ID);
+		
+		verify(dao).delete(ORDER_ID);
+		
+		assertTrue(result);
+		
+	}
 	
+	@Test
+	public void deleteOrder_Does_Not_Delete_The_Order() throws SQLException, BOException {
+		when(dao.delete(ORDER_ID)).thenReturn(0);
+		boolean result = service.deleteOrder(ORDER_ID);
+		
+		verify(dao).delete(ORDER_ID);
+		
+		assertFalse(result);
+		
+	}
+	
+	@Test(expected=BOException.class)
+	public void deleteOrder_Throws_BOException() throws SQLException, BOException {
+		when(dao.delete(ORDER_ID)).thenThrow(SQLException.class);
+		service.deleteOrder(ORDER_ID);
+	}
 
 }

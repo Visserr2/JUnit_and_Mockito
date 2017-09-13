@@ -10,10 +10,6 @@ public class OrderServiceImpl implements OrderService {
 	
 	OrderDAO dao;
 
-	public OrderDAO getDao() {
-		return dao;
-	}
-
 	public void setDao(OrderDAO dao) {
 		this.dao = dao;
 	}
