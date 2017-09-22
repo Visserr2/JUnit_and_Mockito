@@ -12,9 +12,9 @@ public class A {
 		try {
 			b.voidMethod();
 		} catch (Exception e) {
-			new RuntimeException();
+			throw new RuntimeException();
 		}
 		
-		return 0;
+		return 1;
 	}
 }
