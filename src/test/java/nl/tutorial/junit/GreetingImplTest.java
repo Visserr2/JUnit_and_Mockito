@@ -1,11 +1,12 @@
 package nl.tutorial.junit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /** Unit Test should be F.I.R.S.T
  * F - Fast
@@ -15,36 +16,61 @@ import org.junit.Test;
  * T - Timely - Write tests before writing code or directly after
  * @author ronald
  */
+
+/** Update 29-08-2018
+ *  Use Junit 5 instead of 4
+ *  Changes:
+ *  	- @Before = @BeforeEach
+ *  	- @After = @AfterEach
+ *  	- New static imports:  org.junit.jupiter.api.Assertions.* for new assertions
+ *  	- New @Test annotation in package org.junit.jupiter.api.Test
+ *  	- Expected attribute no longer supported. Use Assertion Class
+ * @author visserr2
+ *
+ */
 public class GreetingImplTest {
 	
 	private Greeting greeting;
 	
-	@Before
+	// Runs before each test method
+	@BeforeEach
 	public void setup() {
 		greeting =  new GreetingImpl();
 	}
 
 	@Test
 	public void greetShouldReturnValidOutput() {
-		String result = greeting.greet("Ronald");
-		
+		String result = greeting.greet("Ronald");	
 		assertNotNull(result);
 		assertEquals("Hello Ronald", result);
 	}
 	
-	@SuppressWarnings("unused")
+	// JUNIT 4
+/*	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void greetShouldThrowAnException_For_NameIsNull() {
 		String result = greeting.greet(null);
+	}*/
+	
+	// JUNIT5
+	@SuppressWarnings("unused")
+	@Test
+	public void greetShouldThrowAnException_For_NameIsNull() {
+		Assertions.assertThrows(IllegalArgumentException.class, ()->{
+			String result = greeting.greet(null);
+		});
 	}
 	
 	@SuppressWarnings("unused")
-	@Test(expected = IllegalArgumentException.class)
-	public void greetShouldThrowAnException_For_NameIsBlank() {
-		String result = greeting.greet("");
+	@Test
+	public void greetShouldThrowAnException_For_NameIsBlank() {	
+		Assertions.assertThrows(IllegalArgumentException.class, ()->{
+			String result = greeting.greet("");
+		});
 	}
 	
-	@After
+	// Runs after each test method
+	@AfterEach
 	public void teardown(){
 		greeting = null;
 	}

@@ -1,17 +1,20 @@
 package nl.tutorial.spring.app.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import nl.tutorial.spring.app.dao.TicketDAO;
 import nl.tutorial.spring.app.dto.Ticket;
@@ -23,8 +26,10 @@ import nl.tutorial.spring.app.dto.Ticket;
  * In this case TicketServiceImpl need to autowire the TicketDao. We need to tell the TicketService-Object that it needs to autowire the Mocked TicketDao.
  * @author ronald
  *
+ *
+ *Update: updated to Spring 5. Also use @ExtendWith(SpringExtension.class) instead of @RunWith(SpringJUnit4ClassRunner.class)
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations="classpath:application-context.xml")
 public class TicketServiceImplTest {
 
@@ -38,7 +43,7 @@ public class TicketServiceImplTest {
 	@InjectMocks
 	private TicketService service;
 	
-	@Before
+	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}

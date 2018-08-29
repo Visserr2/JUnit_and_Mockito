@@ -1,13 +1,14 @@
 package nl.tutorial.spy;
 
-import static org.junit.Assert.assertSame;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -30,7 +31,7 @@ public class ListTest {
 	@Mock
 	ArrayList<String> myList2 = new ArrayList<>();
 	
-	@Before
+	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
@@ -54,7 +55,7 @@ public class ListTest {
 		myList2.add("Jeroen");
 		
 		// Call real method with Mock-Object. Preferred over the Spy-annotation style
-	//	when(myList2.size()).thenCallRealMethod();
+		//	when(myList2.size()).thenCallRealMethod();
 		
 		when(myList2.size()).thenReturn(3);
 		

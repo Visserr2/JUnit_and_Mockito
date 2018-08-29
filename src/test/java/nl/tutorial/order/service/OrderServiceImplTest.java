@@ -1,7 +1,8 @@
 package nl.tutorial.order.service;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,8 +10,9 @@ import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -28,7 +30,7 @@ public class OrderServiceImplTest {
 	private OrderServiceImpl service;
 	private Order order;
 	
-	@Before
+	@BeforeEach
 	public void setup() {
 		// Initialize mocks
 		MockitoAnnotations.initMocks(this);	
@@ -65,11 +67,13 @@ public class OrderServiceImplTest {
 		assertFalse(result);
 	}
 	
-	@Test(expected=BOException.class)
+	@Test
 	public void placeOrder_Should_Throw_BOException() throws SQLException, BOException{			
 		// Setting Expectation - throws SQL Exception
-		when(dao.create(Mockito.any(Order.class))).thenThrow(SQLException.class);			
-		service.placeOrder(order);
+		when(dao.create(Mockito.any(Order.class))).thenThrow(SQLException.class);				
+		Assertions.assertThrows(BOException.class, ()->{
+			service.placeOrder(order);
+		});
 	}
 	
 	@Test
@@ -106,23 +110,29 @@ public class OrderServiceImplTest {
 		assertFalse(result);
 	}
 	
-	@Test(expected=BOException.class)
+	@Test
 	public void cancelOrder_ReadMethod_Should_Throw_BOException() throws SQLException, BOException {
 		// setting expectations
 		when(dao.read(Mockito.anyInt())).thenThrow(SQLException.class);
 		
 		// execute methods
-		service.candelOrder(ORDER_ID);	
+		Assertions.assertThrows(BOException.class, ()->{
+			service.candelOrder(ORDER_ID);
+		});
 	}
 	
-	@Test(expected=BOException.class)
+	@Test
 	public void cancelOrder_UpdateMethod_Should_Throw_BOException() throws SQLException, BOException {
 		// setting expectations
 		when(dao.read(Mockito.anyInt())).thenReturn(order);
 		when(dao.update(Mockito.any(Order.class))).thenThrow(SQLException.class);
 		
 		// execute methods
-		service.candelOrder(ORDER_ID);	
+		// execute methods
+		Assertions.assertThrows(BOException.class, ()->{
+			service.candelOrder(ORDER_ID);
+		});
+		
 	}
 	
 	@Test
@@ -147,10 +157,15 @@ public class OrderServiceImplTest {
 		
 	}
 	
-	@Test(expected=BOException.class)
+	@Test
 	public void deleteOrder_Throws_BOException() throws SQLException, BOException {
 		when(dao.delete(Mockito.anyInt())).thenThrow(SQLException.class);
-		service.deleteOrder(ORDER_ID);
+		
+		// execute methods
+		Assertions.assertThrows(BOException.class, ()->{
+			service.deleteOrder(ORDER_ID);
+		});
+		
 	}
 
 }

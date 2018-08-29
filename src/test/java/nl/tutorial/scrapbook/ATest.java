@@ -1,13 +1,15 @@
 package nl.tutorial.scrapbook;
 
-import static org.junit.Assert.assertSame;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -26,7 +28,7 @@ public class ATest {
 	B b;
 	private A a;
 	
-	@Before
+	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		a = new A(b);
@@ -45,14 +47,17 @@ public class ATest {
 
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test
 	public void usesVoidMethodShouldThrowRuntimeException() throws Exception {
 		// Run void method and throw exception
 		doThrow(Exception.class).when(b).voidMethod();
-		a.usesVoidMethod();
+		
+		Assertions.assertThrows(RuntimeException.class, ()->{
+			a.usesVoidMethod();
+		});
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test
 	public void usesVoidMethodShouldTestTwoCalls() throws Exception {
 		// When voidMethod is called. First Do Nothing, Second Throw Exception
 		doNothing().doThrow(Exception.class).when(b).voidMethod();
@@ -62,7 +67,9 @@ public class ATest {
 		verify(b, times(1)).voidMethod();
 		
 		// call method second time, throw exception
-		a.usesVoidMethod();
+		Assertions.assertThrows(RuntimeException.class, ()->{
+			a.usesVoidMethod();
+		});
 	}
 
 }

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>JunitAndMockitoTutorial</groupId>
@@ -11,11 +12,38 @@
 	</properties>
 
 	<dependencies>
-		<!-- Test dependencies -->
+
+
+		<!-- Add junit 4 dependency -->
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>4.12</version> <scope>test</scope> </dependency> -->
+
+		<!-- Add Junit 5 dependencies. Junit5 is modularized -->
+
+		<!-- Junit Jupiter Engine. This is the core module -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Junit Vintage Engine. This is for supporting old versions of Junit -->
+		<!-- <dependency> <groupId>org.junit.vintage</groupId> <artifactId>junit-vintage-engine</artifactId> 
+			<version>5.2.0</version> <scope>test</scope> </dependency> -->
+
+		<!-- Mockito dependencies -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.7.3</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -33,30 +61,23 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<version>5.0.8.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<version>5.0.8.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<version>5.0.8.RELEASE</version>
 		</dependency>
 
 	</dependencies>
